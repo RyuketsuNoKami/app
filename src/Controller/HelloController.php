@@ -30,8 +30,8 @@ class HelloController extends ApiController
     public function index(Table1Repository $table1Repository){
        
         $tables=$table1Repository->transformAll();
-        return $this->respond($tables);
         
+        return $this->respond($tables);
     }
 
     /**
