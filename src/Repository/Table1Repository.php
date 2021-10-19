@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Table1;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Table1|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class Table1Repository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Table1::class);
+        $this->manager = $manager;
     }
 
     // /**
@@ -37,10 +40,10 @@ class Table1Repository extends ServiceEntityRepository
     */
 
     
-    public function transform(Table1 $table1){
+    public function transform(){
         return[
-            'id'    =>(int) $table1->getId(),
-            'title' =>(string)  $table1->getTitle()
+            'id'    =>$this->getId(),
+            'title' =>$this->getTitle()
         ];
         
     }
@@ -57,19 +60,6 @@ class Table1Repository extends ServiceEntityRepository
         $this->manager->persist($newtable);
         $this->manager->flush();
     }
-  /*  public function transformAll(){
-        $tables = $this->findAll();
-        $tablesArray = [];
-
-        foreach ($tables as $table1) {
-            $tablesArray[] = $this->transform($table1);
-        
-        }
-
-        
-        return $tablesArray;
-}*/
-
     /*
     public function findOneBySomeField($value): ?Table1
     {

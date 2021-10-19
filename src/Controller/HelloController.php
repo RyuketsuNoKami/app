@@ -15,6 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HelloController extends ApiController
 {
+
+    private $table1Repository;
+
+    public function __construct(Table1Repository $table1Repository)
+    {
+        $this->tableRepository = $table1Repository;
+    }
+
+
     /**
     * @Route("/hello/showall", methods={"GET"})
     */
@@ -43,7 +52,7 @@ class HelloController extends ApiController
     /**
     *  @Route("/hello/register", methods={"POST"})
     */
-    public function create(Request $request, Table1Repository $table1Repository):JsonResponse
+    public function create(Request $request):JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -53,7 +62,11 @@ class HelloController extends ApiController
 
         if (empty($Title) ) {
             return $this->json(['status' => 'Title is empty please complete'], JsonResponse::HTTP_CREATED);
+            throw new NotFoundHttpException('Expecting mandatory parameters!');
         }
+
+        $this->tableRepository->saveTable($id, $Title);
+
         return $this->json(['status' => 'New line created! Good Job'], JsonResponse::HTTP_CREATED);
     }
     
