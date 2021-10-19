@@ -45,7 +45,19 @@ class Table1Repository extends ServiceEntityRepository
         
     }
 
-    public function transformAll(){
+
+    public function saveTable($id, $Title)
+    {
+        $newtable = new Table1();
+
+        $newtable
+            ->setId($id)
+            ->setTitle($Title);
+
+        $this->manager->persist($newtable);
+        $this->manager->flush();
+    }
+  /*  public function transformAll(){
         $tables = $this->findAll();
         $tablesArray = [];
 
@@ -56,7 +68,7 @@ class Table1Repository extends ServiceEntityRepository
 
         
         return $tablesArray;
-}
+}*/
 
     /*
     public function findOneBySomeField($value): ?Table1

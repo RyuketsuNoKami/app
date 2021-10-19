@@ -7,9 +7,10 @@ use App\Repository\Table1Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
+
 
 
 class HelloController extends ApiController
@@ -39,5 +40,22 @@ class HelloController extends ApiController
     }
 
 
+    /**
+    *  @Route("/hello/register", methods={"POST"})
+    */
+    public function create(Request $request, Table1Repository $table1Repository):JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $id = $data['id'];
+        $Title = $data['Title'];
+  
+
+        if (empty($Title) ) {
+            return $this->json(['status' => 'Title is empty please complete'], JsonResponse::HTTP_CREATED);
+        }
+        return $this->json(['status' => 'New line created! Good Job'], JsonResponse::HTTP_CREATED);
+    }
+    
 
 }
