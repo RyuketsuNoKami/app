@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Appointments;
+//include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -27,11 +30,13 @@ class HelloController extends ApiController
     /**
     * @Route("/hello/showall", methods={"GET"})
     */
-    public function index(Table1Repository $table1Repository){
-       
+    public function index(Table1Repository $table1Repository, PaginatorInterface $paginator, Request $request){
+
         $tables=$table1Repository->transformAll();
+
+        $tables=$paginator->paginate($tables, $request->query->getInt('page', 1), 5);
         
-        return $this->respond($tables);
+        return $this->render('hello/index.html.twig',['table'=>$tables]);
     }
 
     /**
