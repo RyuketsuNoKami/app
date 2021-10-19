@@ -36,6 +36,28 @@ class Table1Repository extends ServiceEntityRepository
     }
     */
 
+    
+    public function transform(Table1 $table1){
+        return[
+            'id'    =>(int) $table1->getId(),
+            'title' =>(string)  $table1->getTitle()
+        ];
+        
+    }
+
+    public function transformAll(){
+        $tables = $this->findAll();
+        $tablesArray = [];
+
+        foreach ($tables as $table1) {
+            $tablesArray[] = $this->transform($table1);
+        
+        }
+
+        
+        return $tablesArray;
+}
+
     /*
     public function findOneBySomeField($value): ?Table1
     {
