@@ -35,7 +35,7 @@ class HelloController extends ApiController
     }
 
     /**
-    *  @Route("/hello/{id}", methods={"GET"})
+    *  @Route("/hello/show/{id}", methods={"GET"})
     */
     public function show($id, Table1Repository $table1Repository){
         $table1=$table1Repository->find($id);
@@ -69,6 +69,18 @@ class HelloController extends ApiController
 
         return $this->json(['status' => 'New line created! Good Job'], JsonResponse::HTTP_CREATED);
     }
-    
+
+    /**
+    *  @Route("/hello/delete/{id}", methods={"DELETE"})
+    */
+    public function delete($id):JsonResponse
+    {
+        $line = $this->tableRepository->findOneBy(['id' => $id]);
+
+        $this->tableRepository->deleteLine($line);
+
+        return new JsonResponse(['status' => 'Line deleted'], Response::HTTP_CREATED);
+
+    }
 
 }
