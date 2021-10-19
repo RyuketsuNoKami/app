@@ -11,6 +11,11 @@
      background: #66d9ff; padding: 2px 6px; }
     </style>
 
+    <style>
+    .example2 { margin: 15em auto; max-width:400px; width: 95%; font: 28px/1.5 sans-serif; 
+     background: #66d9ff; padding: 2px 6px; }
+    </style>
+
     <body class="example1">
 
     
@@ -21,6 +26,25 @@
                     {{t.title}}
                  </li>
         
+            {% endfor %}
+        </ul>
+
+        <div class="navigation">
+            {{ knp_pagination_render(table) }}
+        </div>
+    
+    </body>
+
+    <body class="example2">
+
+        <ul>
+            {% for t in table %}
+                {% if t.id >2 %}
+                    <li> 
+                        {{t.id}}
+                        {{t.title}}
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
 
