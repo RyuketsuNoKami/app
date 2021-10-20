@@ -5,9 +5,9 @@ How to start the app
 
 For the endpoints for insert(POST) and delete(DELETE) you have to use POSTMAN
 
-Open 3 terminal :one for symfony
-				one for encore
-				one for commands
+Open 3 terminal :one for symfony,
+		one for encore,
+		one for commands.
 				
 	1)Symfony terminal: 
   
